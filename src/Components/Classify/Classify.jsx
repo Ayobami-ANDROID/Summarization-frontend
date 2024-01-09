@@ -1,51 +1,56 @@
-import React,{useState} from 'react'
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const Classify = () => {
-  
-    const [inputText, setInputText] = useState('');
-    const [prediction, setPrediction] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
-  
-    const handleInputChange = (event) => {
-      setInputText(event.target.value);
-    };
-  
-  
+  const [inputText, setInputText] = useState("");
+  const [prediction, setPrediction] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const handlePredict = async (event) => {
-        event.preventDefault(); 
-        
-        if (!inputText.trim()) {
-            setError('Input text cannot be empty!');
-            setLoading(false)
-            return; // Exit early if input text is empty
-          }
+  const handleInputChange = (event) => {
+    setInputText(event.target.value);
+  };
 
-        setLoading(true);
-        try {
-          const response = await axios.post('http://localhost:7000/predict', {
-            text: inputText,
-          });
-    
-          if (!response.data.error) {
-            setPrediction(` the document is ${response.data.prediction}`);
-            setError('');
-          } else {
-            setError('Error predicting text. Please try again.');
-          }
-        } catch (error) {
-          setError('Error predicting text. Please try again.');
-          console.error(error);
-        } finally {
-            setLoading(false); // Set loading to false after the prediction request completes
-          }
-      };
+  const handlePredict = async (event) => {
+    event.preventDefault();
 
-  
-    return (
-        <div className="centering body__wrapper">
+    if (!inputText.trim()) {
+      setError("Input text cannot be empty!");
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+      setLoading(false);
+      return; // Exit early if input text is empty
+    }
+
+    setLoading(true);
+    try {
+      const response = await axios.post("http://localhost:7000/predict", {
+        text: inputText,
+      });
+
+      if (!response.data.error) {
+        setPrediction(` the document is ${response.data.prediction}`);
+        setError("");
+      } else {
+        setError("Error predicting text. Please try again.");
+        setTimeout(() => {
+          setError("");
+        }, 5000);
+      }
+    } catch (error) {
+      setError("Error predicting text. Please try again.");
+      setTimeout(() => {
+        setError("");
+      }, 5000);
+      console.error(error);
+    } finally {
+      setLoading(false); // Set loading to false after the prediction request completes
+    }
+  };
+
+  return (
+    <div className="centering body__wrapper">
       <h1 className="title mb-24">Classify</h1>
 
       <div className="centering mb-24 form__wrapper">
@@ -64,7 +69,7 @@ const Classify = () => {
             className="centering mb-24"
             type="submit"
           >
-           {loading ? 'Loading...' : 'Classify'}
+            {loading ? "Loading..." : "Classify"}
           </button>
           <p id="errorText">{error}</p>
         </form>
@@ -78,7 +83,7 @@ const Classify = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Classify
+export default Classify;
