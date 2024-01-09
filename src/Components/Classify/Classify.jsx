@@ -32,14 +32,17 @@ const Classify = () => {
       if (!response.data.error) {
         setPrediction(` the document is ${response.data.prediction}`);
         setError("");
+        setInputText("")
       } else {
         setError("Error predicting text. Please try again.");
+        setInputText("")
         setTimeout(() => {
           setError("");
         }, 5000);
       }
     } catch (error) {
       setError("Error predicting text. Please try again.");
+      setInputText("")
       setTimeout(() => {
         setError("");
       }, 5000);

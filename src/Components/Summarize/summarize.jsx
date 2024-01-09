@@ -39,6 +39,7 @@ const SummarizerComponent = () => {
 
       const data = response.data;
       setSummary(data.summary_text);
+      setSentences("")
       setError("");
     } catch (error) {
       setError(error.response?.data?.error || "An error occurred.");
@@ -46,6 +47,7 @@ const SummarizerComponent = () => {
         setError("");
       }, 5000);
       setSummary("");
+      setSentences("")
     } finally {
       setLoading(false);
     }
