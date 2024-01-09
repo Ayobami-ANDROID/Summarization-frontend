@@ -19,6 +19,7 @@ const Classify = () => {
         
         if (!inputText.trim()) {
             setError('Input text cannot be empty!');
+            setLoading(false)
             return; // Exit early if input text is empty
           }
 

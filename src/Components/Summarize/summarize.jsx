@@ -19,6 +19,7 @@ const SummarizerComponent = () => {
     if (!sentences.trim()) {
       setError('Input cannot be empty.');
       setSummary('');
+      setLoading(false)
       return;
     }
   
